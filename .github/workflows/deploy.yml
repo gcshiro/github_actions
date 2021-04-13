@@ -26,7 +26,7 @@ jobs:
           echo {{ENVCODE}}
       
       - name: チェックアウト
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/head/develop'
         uses: actions/checkout@v2
       
       - name: dispatchチェックアウト
