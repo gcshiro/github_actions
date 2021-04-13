@@ -22,5 +22,13 @@ jobs:
         if: github.event.client_payload
         env:
           ENVCODE: prd
-        run: |
-          echo "ENVCODE=${ENVCODE}" >> $GITHUB_ENV
+      
+      - name: チェックアウト
+        if: github.event_name == 'push'
+        uses: actions/checkout@v2
+      
+      - name: dispatchチェックアウト
+        if: github.event_name == 'repository_dispatch'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.ref }}
