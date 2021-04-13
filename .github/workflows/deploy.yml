@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - develop
+      - release
+      - main
+  repository_dispatch:
+
+env:
+  CI: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: contentful
+        if: github.event.client_payload
+        env:
+          ENVCODE: prd
+        run: |
+          echo "ENVCODE=${ENVCODE}" >> $GITHUB_ENV
